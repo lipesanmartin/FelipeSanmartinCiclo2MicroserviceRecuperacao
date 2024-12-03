@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model cliente {
+  cliente_id Int      @id @default(autoincrement())
+  nome       String   @db.VarChar(255)
+  email      String   @db.VarChar(255)
+  seguro     seguro[]
+}
+
+model seguro {
+  seguro_id  Int      @id @default(autoincrement())
+  modelo     String?  @db.VarChar(255)
+  placa      String?  @db.VarChar(255)
+  cliente_id Int?
+  cliente    cliente? @relation(fields: [cliente_id], references: [cliente_id], onDelete: Cascade, onUpdate: Restrict, map: "seguro_ibfk_1")
+
+  @@index([cliente_id], map: "cliente_id")
+}
