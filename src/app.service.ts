@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { Cliente } from './interface/cliente';
+import { Seguro } from './interface/seguro';
 
 @Injectable()
 export class AppService {
@@ -11,9 +12,15 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async post(dto: Cliente) {
+  async postCliente(dto: Cliente) {
      return await this.prisma.cliente.create({
       data: dto
     })
   }
+
+  async postSeguro(dto: Seguro) {
+    return await this.prisma.seguro.create({
+     data: dto
+   })
+ }
 }
